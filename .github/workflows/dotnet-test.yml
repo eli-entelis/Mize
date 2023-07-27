@@ -24,7 +24,7 @@ jobs:
       run: dotnet restore ./ChainResource/ChainResource.sln
 
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build ./ChainResource/ChainResource.sln --configuration Release
 
     - name: Run xUnit tests
-      run: dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test ./Tests/*Tests.csproj --configuration Release --logger "trx;LogFileName=test-results.trx"

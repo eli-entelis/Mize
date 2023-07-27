@@ -2,6 +2,6 @@
 {
     public interface IReadAndWriteStorage<T> : IReadOnlyStorage<T>
     {
-        Task SetValue(T value);
+        Task SetValue(T? value);
     }
 }

@@ -10,7 +10,7 @@ namespace Tests
             // Arrange
             var expiration = TimeSpan.FromMinutes(30);
             var value = "Test Value";
-            var storage = new MemoryStorage<string>(expiration);
+            var storage = new MemoryStorage<string?>(expiration);
             await storage.SetValue(value);
 
             // Act
@@ -26,7 +26,7 @@ namespace Tests
             // Arrange
             var expiration = TimeSpan.FromMilliseconds(1);
             var value = "Test Value";
-            var storage = new MemoryStorage<string>(expiration);
+            var storage = new MemoryStorage<string?>(expiration);
             await storage.SetValue(value);
 
             // Wait for the expiration time to pass
@@ -45,7 +45,7 @@ namespace Tests
             // Arrange
             var expiration = TimeSpan.FromMinutes(30);
             var value = "Test Value";
-            var storage = new MemoryStorage<string>(expiration);
+            var storage = new MemoryStorage<string?>(expiration);
 
             // Act
             await storage.SetValue(value);

@@ -1,5 +1,6 @@
-using ChainResource.Storage;
 using Newtonsoft.Json;
+
+namespace ChainResource.Storage;
 
 public class WebServiceStorage<T> : IReadOnlyStorage<T>
 {
@@ -12,7 +13,7 @@ public class WebServiceStorage<T> : IReadOnlyStorage<T>
         _httpClient = httpClient;
     }
 
-    public async Task<T> GetValue()
+    public async Task<T?> GetValue()
     {
         Console.WriteLine($"fetching data from web service with api: {_apiUrl}");
         HttpResponseMessage response = await _httpClient.GetAsync(_apiUrl);

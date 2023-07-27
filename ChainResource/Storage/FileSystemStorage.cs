@@ -4,18 +4,18 @@ namespace ChainResource.Storage
 {
     public class FileSystemStorage<T> : IReadAndWriteStorage<T>
     {
-        private readonly string _filePath;
+        private readonly string? _filePath;
         private readonly TimeSpan _expiration;
         private DateTime _expirationTime;
 
-        public FileSystemStorage(string filePath, TimeSpan expiration)
+        public FileSystemStorage(string? filePath, TimeSpan expiration)
         {
             _filePath = filePath;
             _expiration = expiration;
             _expirationTime = DateTime.UtcNow.Add(_expiration);
         }
 
-        public async Task<T> GetValue()
+        public async Task<T?> GetValue()
         {
             if (File.Exists(_filePath))
             {
@@ -46,7 +46,7 @@ namespace ChainResource.Storage
             return default;
         }
 
-        public async Task SetValue(T value)
+        public async Task SetValue(T? value)
         {
             Console.WriteLine("Setting filesystem data");
             // Serialize the value to JSON

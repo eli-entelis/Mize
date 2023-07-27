@@ -2,6 +2,6 @@
 {
     public interface IReadOnlyStorage<T>
     {
-        public Task<T> GetValue();
+        public Task<T?> GetValue();
     }
 }

@@ -11,7 +11,7 @@ namespace Tests
             var filePath = "test_file.json";
             var expiration = TimeSpan.FromMinutes(30);
             var value = "Test Value";
-            var storage = new FileSystemStorage<string>(filePath, expiration);
+            var storage = new FileSystemStorage<string?>(filePath, expiration);
             await storage.SetValue(value);
 
             // Act
@@ -31,7 +31,7 @@ namespace Tests
             var filePath = "test_file.json";
             var expiration = TimeSpan.FromMilliseconds(1);
             var value = "Test Value";
-            var storage = new FileSystemStorage<string>(filePath, expiration);
+            var storage = new FileSystemStorage<string?>(filePath, expiration);
             await storage.SetValue(value);
 
             // Wait for the expiration time to pass
@@ -69,7 +69,7 @@ namespace Tests
             var filePath = "test_file.json";
             var expiration = TimeSpan.FromMinutes(30);
             var value = "Test Value";
-            var storage = new FileSystemStorage<string>(filePath, expiration);
+            var storage = new FileSystemStorage<string?>(filePath, expiration);
 
             // Act
             await storage.SetValue(value);

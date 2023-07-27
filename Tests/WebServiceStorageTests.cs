@@ -2,6 +2,7 @@
 using Moq.Protected;
 using Newtonsoft.Json;
 using System.Net;
+using ChainResource.Storage;
 
 namespace Tests
 {

@@ -34,7 +34,7 @@ namespace ChainResource
                 catch (Exception ex)
                 {
                     // Log any exception, or implement the desired behavior when a storage fails
-                    Console.WriteLine($"Error accessing storage: {ex.Message}");
+                    Console.WriteLine($"Error accessing storage: {ex.Message}.");
                 }
             }
 

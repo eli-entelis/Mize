@@ -4,27 +4,35 @@ using Microsoft.Extensions.Configuration;
 
 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-var chainResource = CreateChainResource<ExchangeRateList>(config);
+try
+{
+    var chainResource = CreateChainResource<ExchangeRateList>(config);
 
-// First run will fetch data either from webService or from filesystem
-ExchangeRateList? exchangeRateList = await chainResource.GetValue();
-Console.WriteLine(exchangeRateList!.ToString());
+    // First run will fetch data either from webService or from filesystem
+    ExchangeRateList? exchangeRateList = await chainResource.GetValue();
+    Console.WriteLine(exchangeRateList!.ToString());
 
-// Second run will fetch data from memory
-ExchangeRateList? exchangeRateListTwo = await chainResource.GetValue();
-Console.WriteLine(exchangeRateListTwo!.ToString());
+    // Second run will fetch data from memory
+    ExchangeRateList? exchangeRateListTwo = await chainResource.GetValue();
+    Console.WriteLine(exchangeRateListTwo!.ToString());
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Fetching data from storage failed. {ex}");
+}
 
 static ChainResource<T> CreateChainResource<T>(IConfiguration config)
 {
     var memoryStorage = CreateMemoryStorage<T>(config, "MemoryStorage");
     var fileSystemStorage = CreateFileSystemStorage<T>(config, "FileSystemStorage");
-    var webServiceStorage = CreateWebServiceStorage<T>(config, "WebServiceStorage");
-
+    var webServiceStorageHttp = CreateWebServiceStorage<T>(config, "WebServiceStorageHttp");
+    var webServiceStorageHttps = CreateWebServiceStorage<T>(config, "WebServiceStorageHttps");
     return new ChainResource<T>(new List<IReadOnlyStorage<T>>
     {
         memoryStorage,
         fileSystemStorage,
-        webServiceStorage
+        webServiceStorageHttp,
+        webServiceStorageHttps
     });
 }
 

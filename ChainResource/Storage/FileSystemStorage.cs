@@ -20,15 +20,15 @@ namespace ChainResource.Storage
             if (File.Exists(_filePath))
             {
                 // Read the value from the file and deserialize it from JSON
-                Console.WriteLine($"fetching data from filesystem with filepath: {_filePath}");
+                Console.WriteLine($"fetching data from filesystem with filepath: {_filePath}.");
                 if (DateTime.UtcNow <= _expirationTime)
                 {
                     try
                     {
                         string json = await File.ReadAllTextAsync(_filePath);
                         var result = JsonConvert.DeserializeObject<T>(json);
-                        if (result == null) Console.WriteLine($"fetching data from filesystem, returned null");
-                        else Console.WriteLine($"fetching data from filesystem, was successful");
+                        if (result == null) Console.WriteLine($"fetching data from filesystem, returned null.");
+                        else Console.WriteLine($"fetching data from filesystem, was successful.");
                         return result;
                     }
                     catch (Exception e)
@@ -38,9 +38,9 @@ namespace ChainResource.Storage
                     }
                 }
 
-                Console.WriteLine("filesystem is expired");
+                Console.WriteLine("filesystem is expired.");
             }
-            else Console.WriteLine($"{_filePath} does not exist");
+            else Console.WriteLine($"{_filePath} does not exist.");
 
             // Return default value if file doesn't exist or expired
             return default;
@@ -48,7 +48,7 @@ namespace ChainResource.Storage
 
         public async Task SetValue(T? value)
         {
-            Console.WriteLine("Setting filesystem data");
+            Console.WriteLine("Setting filesystem data.");
             // Serialize the value to JSON
             string json = JsonConvert.SerializeObject(value);
 
@@ -68,7 +68,7 @@ namespace ChainResource.Storage
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error deleting {_filePath}: {ex.Message}");
+                    Console.WriteLine($"Error deleting {_filePath}: {ex.Message}.");
                 }
             }
         }

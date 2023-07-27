@@ -12,7 +12,7 @@ namespace Tests
         public async Task GetValue_ApiCallSucceeds_ReturnsValue()
         {
             // Arrange
-            var apiUrl = "http://example.com/api/data";
+            var apiUrl = "https://example.com/api/data"; // Use HTTPS protocol
             var expectedValue = "Test Value";
             var httpClientMock = CreateHttpClientMock(HttpStatusCode.OK, JsonConvert.SerializeObject(expectedValue));
             var httpClient = new HttpClient(httpClientMock.Object);
@@ -29,7 +29,7 @@ namespace Tests
         public async Task GetValue_ApiCallFails_ThrowsException()
         {
             // Arrange
-            var apiUrl = "http://example.com/api/data";
+            var apiUrl = "https://example.com/api/data"; // Use HTTPS protocol
             var httpClientMock = CreateHttpClientMock(HttpStatusCode.InternalServerError, string.Empty);
             var httpClient = new HttpClient(httpClientMock.Object);
 

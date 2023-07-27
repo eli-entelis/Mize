@@ -21,7 +21,7 @@ jobs:
         dotnet-version: '7.0'  # Adjust to the version you want to use
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./ChainResource/ChainResource.sln
 
     - name: Build
       run: dotnet build --configuration Release

@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace ChainResource
+﻿namespace ChainResource
 {
     public class ExchangeRateList
     {

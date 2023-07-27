@@ -1,0 +1,30 @@
+name: .NET Core Test
+
+on:
+  push:
+    branches:
+      - main  # Adjust this branch name if necessary
+  pull_request:
+  workflow_dispatch:  # This trigger allows manual runs
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # You can change this to other supported OS, like macos-latest or windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.0'  # Adjust to the version you want to use
+
+    - name: Restore dependencies
+      run: dotnet restore ./ChainResource/ChainResource.sln
+
+    - name: Build
+      run: dotnet build ./ChainResource/ChainResource.sln --configuration Release
+
+    - name: Run xUnit tests
+      run: dotnet test ./Tests/*Tests.csproj --configuration Release --logger "trx;LogFileName=test-results.trx"

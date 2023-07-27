@@ -4,30 +4,29 @@ namespace ChainResource
 {
     public class ChainResource<T>
     {
-        private List<IReadOnlyStorage<T>> storages;
+        private readonly List<IReadOnlyStorage<T>> _storageList;
 
-        public ChainResource(List<IReadOnlyStorage<T>> storages)
+        public ChainResource(List<IReadOnlyStorage<T>> storageList)
         {
-            this.storages = storages;
+            this._storageList = storageList;
         }
 
-        public async Task<T> GetValue()
+        public async Task<T?> GetValue()
         {
             T? value = default;
 
-            for (int i = 0; i < storages.Count; i++)
+            for (int i = 0; i < _storageList.Count; i++)
             {
                 try
                 {
-                    value = await storages[i].GetValue();
+                    value = await _storageList[i].GetValue();
 
                     // If the value is successfully retrieved from the storage, propagate it upwards
                     if (value != null)
                     {
                         for (int j = 0; j < i; j++)
                         {
-                            var writableStorage = storages[i - j - 1] as IReadAndWriteStorage<T>;
-                            if (writableStorage != null) await writableStorage.SetValue(value);
+                            if (_storageList[i - j - 1] is IReadAndWriteStorage<T> writableStorage) await writableStorage.SetValue(value);
                         }
                         break;
                     }

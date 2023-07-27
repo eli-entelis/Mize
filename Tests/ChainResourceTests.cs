@@ -1,7 +1,6 @@
 ﻿using ChainResource;
 using ChainResource.Storage;
 using Moq;
-using Xunit;
 
 namespace Tests
 {

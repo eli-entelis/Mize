@@ -81,5 +81,37 @@ namespace Tests
             // Cleanup
             File.Delete(filePath);
         }
+
+        [Fact]
+        public void Dispose_DeletesFile_IfFileExists()
+        {
+            // Arrange
+            string testFilePath = "testfile.txt";
+            File.WriteAllText(testFilePath, "Test data");
+
+            // Act
+            using (var storage = new FileSystemStorage<string>(testFilePath, TimeSpan.FromSeconds(10)))
+            {
+                // Call Dispose to delete the test file
+                storage.Dispose();
+            }
+
+            // Assert
+            Assert.False(File.Exists(testFilePath));
+        }
+
+        [Fact]
+        public void Dispose_DoesNotThrowException_IfFileDoesNotExist()
+        {
+            // Arrange
+            string nonExistentFilePath = "nonexistentfile.txt";
+
+            // Act & Assert
+            using (var storage = new FileSystemStorage<string>(nonExistentFilePath, TimeSpan.FromSeconds(10)))
+            {
+                // Call Dispose; it should not throw any exceptions when the file does not exist.
+                storage.Dispose();
+            }
+        }
     }
 }

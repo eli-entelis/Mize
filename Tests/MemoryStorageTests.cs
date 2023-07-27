@@ -54,5 +54,20 @@ namespace Tests
             // Assert
             Assert.Equal(value, result);
         }
+
+        [Fact]
+        public void Dispose_ResetsValueToNull()
+        {
+            // Arrange
+            var storage = new MemoryStorage<string>(TimeSpan.FromSeconds(10));
+            storage.SetValue("Test Data");
+
+            // Act
+            storage.Dispose();
+
+            // Assert
+            var valueAfterDispose = storage.GetValue().GetAwaiter().GetResult();
+            Assert.Null(valueAfterDispose);
+        }
     }
 }

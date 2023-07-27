@@ -1,8 +1,8 @@
-﻿using Moq;
+﻿using ChainResource.Storage;
+using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
 using System.Net;
-using ChainResource.Storage;
 
 namespace Tests
 {

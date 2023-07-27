@@ -53,8 +53,24 @@ namespace ChainResource.Storage
             string json = JsonConvert.SerializeObject(value);
 
             // Write the JSON to the file
-            await File.WriteAllTextAsync(_filePath, json);
+            await File.WriteAllTextAsync(_filePath!, json);
             _expirationTime = DateTime.UtcNow.Add(_expiration);
+        }
+
+        public void Dispose()
+        {
+            if (_filePath != null && File.Exists(_filePath))
+            {
+                try
+                {
+                    File.Delete(_filePath);
+                    Console.WriteLine($"{_filePath} deleted on disposal.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error deleting {_filePath}: {ex.Message}");
+                }
+            }
         }
     }
 }

@@ -7,12 +7,12 @@ var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 var chainResource = CreateChainResource<ExchangeRateList>(config);
 
 // First run will fetch data either from webService or from filesystem
-ExchangeRateList exchangeRateList = await chainResource.GetValue();
-Console.WriteLine(exchangeRateList.ToString());
+ExchangeRateList? exchangeRateList = await chainResource.GetValue();
+Console.WriteLine(exchangeRateList!.ToString());
 
 // Second run will fetch data from memory
-ExchangeRateList exchangeRateListTwo = await chainResource.GetValue();
-Console.WriteLine(exchangeRateListTwo.ToString());
+ExchangeRateList? exchangeRateListTwo = await chainResource.GetValue();
+Console.WriteLine(exchangeRateListTwo!.ToString());
 
 static ChainResource<T> CreateChainResource<T>(IConfiguration config)
 {
@@ -41,6 +41,10 @@ static MemoryStorage<T> CreateMemoryStorage<T>(IConfiguration config, string sto
 static FileSystemStorage<T> CreateFileSystemStorage<T>(IConfiguration config, string storageName)
 {
     var filePath = config.GetSection($"{storageName}:FilePath").Value;
+    if (filePath == null)
+    {
+        throw new ArgumentException($"Invalid {storageName}:FilePath configuration value.");
+    }
 
     if (!int.TryParse(config.GetSection($"{storageName}:ExpirationIntervalHours").Value, out int fileSystemExpirationHours))
     {

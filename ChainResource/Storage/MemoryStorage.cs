@@ -34,5 +34,10 @@
             _expirationTime = DateTime.UtcNow.Add(_expiration);
             return Task.CompletedTask;
         }
+
+        public void Dispose()
+        {
+            _value = default;
+        }
     }
 }

@@ -28,8 +28,8 @@ public class WebServiceStorage<T> : IReadOnlyStorage<T>
         if (response.IsSuccessStatusCode)
         {
             string content = await response.Content.ReadAsStringAsync();
+            var result = Deserialize<T>(content);
             // Deserialize the JSON response and return the value
-            var result = JsonConvert.DeserializeObject<T>(content);
             if (result == null) Console.WriteLine("fetching data from web service, returned null.");
             else Console.WriteLine("fetching data from web service, was successful.");
             return result;
@@ -37,5 +37,10 @@ public class WebServiceStorage<T> : IReadOnlyStorage<T>
 
         // Handle the case when the API call fails
         throw new Exception("API call failed.");
+    }
+
+    protected virtual T? Deserialize<T>(string content)
+    {
+        return JsonConvert.DeserializeObject<T>(content);
     }
 }

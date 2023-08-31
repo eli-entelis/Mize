@@ -9,7 +9,6 @@
         public MemoryStorage(TimeSpan expiration)
         {
             _expiration = expiration;
-            _expirationTime = DateTime.UtcNow.Add(_expiration);
         }
 
         public Task<T?> GetValue()

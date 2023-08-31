@@ -12,7 +12,6 @@ namespace ChainResource.Storage
         {
             _filePath = filePath;
             _expiration = expiration;
-            _expirationTime = DateTime.UtcNow.Add(_expiration);
         }
 
         public async Task<T?> GetValue()
